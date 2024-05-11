@@ -1,18 +1,11 @@
 document.getElementById('register-form').addEventListener('submit', function(event) {
     event.preventDefault();
     
-
-    var username = document.getElementById('username').value;
+    var cedula = document.getElementById('cedula').value;
+    var nombre = document.getElementById('username').value;
     var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('confirm-password').value;
+    var telefono = document.getElementById('telefono').value;
+    var direccion = document.getElementById('direccion').value;
+    
 
-    
-    if (password !== confirmPassword) {
-        alert('Las contraseñas no coinciden');
-        return;
-    }
-
-    
-    
 });
