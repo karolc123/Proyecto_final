@@ -4,7 +4,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: aquamarine;
+    background:  linear-gradient(to right, rgb(251, 184, 239), rgb(182, 253, 245));
 }
 
 .container {
@@ -54,21 +54,14 @@ button:hover {
 
 
 /* estilos login */
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+
 
 .login-container {
-    width: 300px;
+    max-width: 400px;
+    margin: 50px auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgb(246, 158, 236);
+    border-radius: 2px;
 }
 
 .form-group {
