@@ -40,11 +40,7 @@ input[type="password"] {
 button {
     width: 100%;
     padding: 10px;
-<<<<<<< HEAD
     background-color:rgb(182, 253, 245);
-=======
-    background-color: #00f7ff;
->>>>>>> acf8871270d76919fd1250120e9380676b3c0244
     color: #fff;
     border: none;
     border-radius: 5px;
