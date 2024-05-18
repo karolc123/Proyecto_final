@@ -1,11 +1,16 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Content-Type: application/json");
+
 // Conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
 $database = "proyecto";
 
-$conexion = mysqli_connect('localhost', 'root', '', 'proyecto');
+$conexion = new mysqli($servername, $username, $password, $database);
 
 // Verificar la conexión
 if ($conexion->connect_error) {
@@ -13,22 +18,24 @@ if ($conexion->connect_error) {
 }
 
 // Recibir datos del formulario
-$cedula = $_POST['cedula'];
-$nombre = $_POST['nombre'];
-$email = $_POST['email'];
-$telefono = $_POST['telefono'];
-$direccion = $_POST['direccion'];
+$data = json_decode(file_get_contents("php://input"));
+
+$cedula = $data->cedula;
+$nombre = $data->nombre;
+$email = $data->email;
+$telefono = $data->telefono;
+$direccion = $data->direccion;
+$tipo = $data->tipo;
 
 // Insertar datos en la base de datos
-$sql = "INSERT INTO clientes (cedula, nombre, `e-mail`, telefono, direccion)
-        VALUES ('$cedula', '$nombre', '$email', '$telefono', '$direccion')";
+$sql = "INSERT INTO clientes (cedula, nombre, email, telefono, direccion, tipo)
+        VALUES ('$cedula', '$nombre', '$email', '$telefono', '$direccion', '$tipo')";
 
 if ($conexion->query($sql) === TRUE) {
-    echo "Cliente guardado correctamente.";
+    echo json_encode(["message" => "Cliente guardado correctamente."]);
 } else {
-    echo "Error al guardar el estudiante: " . $conexion->error;
+    echo json_encode(["message" => "Error al guardar el cliente: " . $conexion->error]);
 }
 
 $conexion->close();
-
 ?>
