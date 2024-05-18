@@ -27,15 +27,18 @@ $telefono = $data->telefono;
 $direccion = $data->direccion;
 $tipo = $data->tipo;
 
-// Insertar datos en la base de datos
-$sql = "INSERT INTO clientes (cedula, nombre, email, telefono, direccion, tipo)
-        VALUES ('$cedula', '$nombre', '$email', '$telefono', '$direccion', '$tipo')";
+if(!empty($cedula) && !empty($nombre) &&
+!empty($email) && !empty($telefono) && 
+!empty($direccion) && !empty($tipo)){
+    // Insertar datos en la base de datos
+    $sql = "INSERT INTO clientes (cedula, nombre, email, telefono, direccion, tipo)
+            VALUES ('$cedula', '$nombre', '$email', '$telefono', '$direccion', '$tipo')";
 
-if ($conexion->query($sql) === TRUE) {
-    echo json_encode(["message" => "Cliente guardado correctamente."]);
-} else {
-    echo json_encode(["message" => "Error al guardar el cliente: " . $conexion->error]);
+    if ($conexion->query($sql) === TRUE) {
+        echo json_encode(["message" => "Cliente guardado correctamente."]);
+    } else {
+        echo json_encode(["message" => "Error al guardar el cliente: " . $conexion->error]);
+    }
 }
-
 $conexion->close();
 ?>
