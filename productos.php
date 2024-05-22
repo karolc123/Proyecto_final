@@ -33,3 +33,5 @@ if (isset($data['nombre'], $data['descripcion'], $data['precio'], $data['cantida
     echo json_encode(array("error" => "No se recibieron todos los datos esperados"));
 }
 ?>
+
+
