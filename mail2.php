@@ -1,12 +1,5 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Content-Type: application/json");
-
-include 'conexion.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -15,19 +8,11 @@ require '../PHPMailer/src/Exception.php';
 require '../PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/src/SMTP.php';
 
-// print_r($_POST);
-
-$cedula = $_POST['cedula'];
-$nombre = $_POST['nombre'];
-$email = $_POST['email'];
-$telefono = $_POST['telefono'];
-$direccion = $_POST['direccion'];
-$tipo = $_POST['tipo'];
 
 class Email
 {
 
-    public function sendEmail($cedula, $nombre, $email, $telefono, $direccion, $tipo)
+    public function sendEmail($email,$cedula,$tipo,$nombre,$telefono,$direccion)
     {
 
         //Create an instance; passing `true` enables exceptions
@@ -43,10 +28,10 @@ class Email
             $mail->Username   = 'miyarlethvarelas@gmail.com';                     //SMTP username
             // $mail->Password   = 'uxhrrzfelyffrzrq';                               //SMTP password
             $mail->Password   = 'lozanomiyarleth123';                               //SMTP password, con
-            // $mail->SMTPSecure = "tls";
-            // $mail->Port = 587;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->SMTPSecure = "tls";
+            $mail->Port = 587;
+            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            // $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom('miyarlethvarelas@gmail.com', 'REGISTRO');
@@ -80,6 +65,3 @@ class Email
         }
     }
 }
-
-
-?> 
