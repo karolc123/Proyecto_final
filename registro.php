@@ -28,6 +28,7 @@ try {
     $mail->setFrom('castrokarol312@gmail.com', 'Tienda');
     $mail->addAddress('Miyarleth.varelas@ucp.edu.co');     //Add a recipient
 
+
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Registro Exitoso';
