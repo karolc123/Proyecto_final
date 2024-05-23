@@ -1,85 +1,47 @@
 <?php
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Content-Type: application/json");
 
+// Incluir el archivo de conexión a la base de datos
 include 'conexion.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+// Obtener los datos JSON enviados desde React
+$data = json_decode(file_get_contents("php://input"), true);
 
-require '../PHPMailer/src/Exception.php';
-require '../PHPMailer/src/PHPMailer.php';
-require '../PHPMailer/src/SMTP.php';
+// Verificar que todos los campos requeridos estén presentes
+if (isset($data['cedula'], $data['nombre'], $data['email'], $data['telefono'], $data['direccion'], $data['contraseña'], $data['tipo'])) {
+    $cedula = $conexion->real_escape_string($data['cedula']);
+    $nombre = $conexion->real_escape_string($data['nombre']);
+    $email = $conexion->real_escape_string($data['email']);
+    $telefono = $conexion->real_escape_string($data['telefono']);
+    $direccion = $conexion->real_escape_string($data['direccion']);
+    $contraseña = $conexion->real_escape_string($data['contraseña']);
+    $tipo = $conexion->real_escape_string($data['tipo']);
 
-// print_r($_POST);
+    // Preparar la consulta SQL
 
-$cedula = $_POST['cedula'];
-$nombre = $_POST['nombre'];
-$email = $_POST['email'];
-$telefono = $_POST['telefono'];
-$direccion = $_POST['direccion'];
-$tipo = $_POST['tipo'];
+    if ($cedula == "") {
+        
+    }else{
 
-class Email
-{
+        $sql = "INSERT INTO clientes (cedula, nombre, email, telefono, direccion, contraseña, tipo)
+            VALUES ('$cedula', '$nombre', '$email', '$telefono', '$direccion','$contraseña', '$tipo')";
 
-    public function sendEmail($cedula, $nombre, $email, $telefono, $direccion, $tipo)
-    {
-
-        //Create an instance; passing `true` enables exceptions
-        $mail = new PHPMailer(true);
-
-        try {
-            //Server settings
-            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->SMTPDebug = 0;
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'miyarlethvarelas@gmail.com';                     //SMTP username
-            // $mail->Password   = 'uxhrrzfelyffrzrq';                               //SMTP password
-            $mail->Password   = 'lozanomiyarleth123';                               //SMTP password, con
-            // $mail->SMTPSecure = "tls";
-            // $mail->Port = 587;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-            //Recipients
-            $mail->setFrom('miyarlethvarelas@gmail.com', 'REGISTRO');
-            $mail->addAddress($email);     //Add a recipient
-            // $mail->addAddress('ellen@example.com');               //Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
-            // $mail->addCC('cc@example.com');
-            // $mail->addBCC('bcc@example.com');
-
-            //Attachments
-            
-            for ($i=0; $i < $totalArchivos; $i++) { 
-              $mail->addAttachment($file['tmp_name'][$i], $file['name'][$i]);         //Add attachments
-            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-            }
-            
-
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = "REGISTRO DE - ".$nombre;
-            $mail->Body    = "<h1>".$cedula."</h1><br><h3>".$telefono."</h3> <br> <h3>".$tipo."</h3>";
-            
-            // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-            $mail->send();
-            // echo 'Message has been sent';
-            // echo 'el mensaje ha sido enviado';
-            echo 1;
-        } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        // Ejecutar la consulta y verificar si fue exitosa
+        if ($conexion->query($sql) === TRUE) {
+            echo json_encode(array("message" => "Cliente guardado correctamente."));
+        } else {
+            echo json_encode(array("error" => "Error al guardar el cliente: " . $conexion->error));
         }
+
     }
+
+    
+} else {
+    echo json_encode(array("error" => "No se recibieron todos los datos esperados"));
 }
 
-
-?> 
+$conexion->close();
+?>
