@@ -49,13 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $precio = $conexion->real_escape_string($_POST['precio']);
     $cantidad = $conexion->real_escape_string($_POST['cantidad']);
 
+
 // Verificar que todos los campos requeridos estén presentes
-if (isset($data['nombre'], $data['descripcion'], $data['precio'], $data['cantidad'], $_FILES['imagen'])) {
-    $nombre = $conexion->real_escape_string($data['nombre']);
-    $descripcion = $conexion->real_escape_string($data['descripcion']);
-    $precio = $conexion->real_escape_string($data['precio']);
-    $cantidad = $conexion->real_escape_string($data['cantidad']);
-    $imagen = $conexion->real_escape_string($_FILES['imagen']);
+    // $nombre = $conexion->real_escape_string($data['nombre']);
+    // $descripcion = $conexion->real_escape_string($data['descripcion']);
+    // $precio = $conexion->real_escape_string($data['precio']);
+    // $cantidad = $conexion->real_escape_string($data['cantidad']);
+    // $imagen = $conexion->real_escape_string($_FILES['imagen']);
 
     // Preparar la consulta SQL
     $sql = "INSERT INTO productos (nombre, descripcion, precio, cantidad, imagen) 
@@ -67,7 +67,5 @@ if (isset($data['nombre'], $data['descripcion'], $data['precio'], $data['cantida
     } else {
         echo json_encode(array("error" => "Error al insertar producto: " . $conexion->error));
     }
-} else {
-    echo json_encode(array("error" => "Solicitud no válida"));
-}
+
 ?>
