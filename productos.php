@@ -9,7 +9,7 @@ header("Content-Type: application/json");
 include 'conexion.php';
 
 // Verificar si el método de la solicitud es POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
     // Directorio donde se guardarán las imágenes
     $targetDir = "uploads/";
 
